@@ -1,4 +1,4 @@
-# BotEraser
+# Boteraser - Block Bots & Secure Your Website
 
 Bot protection solution with flexible deployment options.
 
