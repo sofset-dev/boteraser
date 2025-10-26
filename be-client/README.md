@@ -35,9 +35,18 @@ chmod +x be-client 2>/dev/null || true
 ```
 
 ## Schedule via cron (every 5 minutes)
-Run every 5 minutes via cron:
-    */5 * * * * /absolute/path/to/your/be-client >/dev/null 2>&1
-Use absolute paths; create /var/log/be-client if missing.
+
+### With logging
+```bash
+*/5 * * * * /absolute/path/to/your/be-client >> /var/log/be-client.log 2>&1
+```
+
+### Without logging (silent)
+```bash
+*/5 * * * * /absolute/path/to/your/be-client >/dev/null 2>&1
+```
+
+**Note:** Use absolute paths and ensure the log directory exists if using logging option.
 
 3. Verify the service is running (varies by your setup). Common checks:
 - Ensure the process is started and listening on the expected port

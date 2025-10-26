@@ -38,10 +38,18 @@ sudo ./be-install
 
 ## Cron scheduling (every 5 minutes)
 Run every 5 minutes via cron:
-    ```bash
-    */5 * * * * /absolute/path/to/your/be-client >/dev/null 2>&1
-    ```
-Use absolute paths; create /var/log/be-client if missing.
+
+Without logging:
+```bash
+*/5 * * * * /absolute/path/to/your/be-client >/dev/null 2>&1
+```
+
+With logging:
+```bash
+*/5 * * * * /absolute/path/to/your/be-client >>/var/log/be-client.log 2>&1
+```
+
+Use absolute paths; create `/var/log/` directory if missing.
 
 ## Next steps
 - Verify the service status (the installer will indicate how)
