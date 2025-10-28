@@ -40,12 +40,12 @@ WordPress plugin: Blocked IPs show IP + reason, auto-release time, and an Unbloc
 ![Blocked IPs](./images/wp-blocked-ips.png)
 
 ### Main Dashboard (Stats)
-Single view of real-time protection metrics, traffic trends, recent activity, and quick actions with basic filters and alerts.
+Single view of protection metrics, traffic trends, recent activity, and quick actions with basic filters and alerts.
 
 ![Main Dashboard](./images/user-dashboard.png)
 
 ### User API
-Shows base URL, API key visibility/rotation, request usage, rate limits, and last verification status. Use the verify/test action to confirm connectivity, and regenerate to rotate credentials. Keep the key secret and update clients after rotation.
+Shows Domain name, API key and request usage status. Use the verify action in your wp-plugin or script to confirm connectivity credentials. Keep the key secret.
 
 ![User API](./images/user-api.png)
 
