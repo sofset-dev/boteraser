@@ -29,7 +29,7 @@ Each folder contains a detailed README.md with prerequisites, installation steps
 ### How to Install Boteraser WordPress Plugin on Your Website 
 [![Watch the setup guide](https://img.youtube.com/vi/bRD-Ubzs4L0/0.jpg)](https://youtu.be/bRD-Ubzs4L0)
 
-Step-by-step setup in WordPress: install the plugin, connect your API key, configure rules/exclusions, and verify real-time bot blocking.
+Step-by-step setup guide for WordPress: install the Boteraser plugin, connect it using your unique API key, configure custom protection rules and exclusions based on your needs, and verify that real-time bot blocking is working correctly on your site.
 
 
 
