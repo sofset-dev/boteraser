@@ -43,19 +43,19 @@ This is the WordPress plugin dashboard showing API status and site-wide statisti
 ### Blocked IPs
 WordPress plugin: Blocked IPs show IP + reason, auto-release time, and an Unblock button. Unblocked IPs may be re-blocked.
 
-![Blocked IPs](./images/wp-blocked-ips.png)
+![Blocked IPs](https://github.com/sofset-dev/boteraser/blob/main/images/wp-blocked-ips.png)
 
 ### Main Dashboard (Stats)
 Single view of protection metrics, traffic trends, recent activity, and quick actions with basic filters and alerts.
 
-![Main Dashboard](./images/user-dashboard.png)
+![Main Dashboard](https://github.com/sofset-dev/boteraser/blob/main/images/user-dashboard.png)
 
 ### User API
 Shows Domain name, API key and request usage status. Use the verify action in your wp-plugin or script to confirm connectivity credentials. Keep the key secret.
 
-![User API](./images/user-api.png)
+![User API](https://github.com/sofset-dev/boteraser/blob/main/images/user-api.png)
 
 ### User SHIELD
 Create and manage security shields with configurable rules and quick enable/disable controls.
 
-![User SHIELD](./images/user-shield.png)
+![User SHIELD](https://github.com/sofset-dev/boteraser/blob/main/images/user-shield.png)
