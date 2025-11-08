@@ -26,9 +26,8 @@ Easy WordPress integration. Install directly through your WordPress admin panel 
 Each folder contains a detailed README.md with prerequisites, installation steps, and configuration instructions.
 
 ## Videos
-
 ### How-to: Boteraser WordPress Plugin  
-[Watch the setup guide](https://youtu.be/bRD-Ubzs4L0)
+[![Watch the setup guide](https://img.youtube.com/vi/bRD-Ubzs4L0/0.jpg)](https://youtu.be/bRD-Ubzs4L0)
 Step-by-step setup in WordPress: install the plugin, connect your API key, configure rules/exclusions, and verify real-time bot blocking.
 
 
