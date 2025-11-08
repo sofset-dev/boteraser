@@ -56,3 +56,19 @@ chmod +x be-client 2>/dev/null || true
 - The exact filenames inside the archive may vary by version; use `ls` to inspect.
 - Look for additional docs (README/INSTALL) in the extracted directory for version‑specific instructions.
 - Prefer the one‑command automated install? See: ../be-client-install-script/README.md
+
+Screenshots
+
+## Screenshots
+
+Install the script with the automated installer or set it up manually—both deliver the same protection. Below are some example screenshots showing the BE Client in action:
+
+### Script BLOCKING IPS
+This script blocks specified IPv4 and IPv6 addresses or CIDR ranges by adding idempotent deny or drop rules to mitigate abusive traffic.
+
+![Script BLOCKING IPS](./images/script-blocking-ips.png)
+
+### Script CONFIG
+Central configuration for the blocking script, specifying API credentials and path to you log file.
+
+![Script CONFIG](./images/script-config.png)

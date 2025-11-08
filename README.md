@@ -25,42 +25,13 @@ Easy WordPress integration. Install directly through your WordPress admin panel 
 
 Each folder contains a detailed README.md with prerequisites, installation steps, and configuration instructions.
 
-## Screenshots
+## Videos
 
-Use the WordPress plugin or the server script to block malicious traffic, bad bots, and automated attacks. Install the script with the automated installer or set it up manually—both deliver the same protection.
+How-to: Boteraser WordPress Plugin  
+[![Watch the how-to](https://img.youtube.com/vi/bRD-Ubzs4L0/maxresdefault.jpg)](https://youtu.be/bRD-Ubzs4L0)  
+Step-by-step setup in WordPress: install the plugin, connect your API key, configure rules/exclusions, and verify real-time bot blocking.
 
-### Dashboard Overview
-This is the WordPress plugin dashboard showing API status and site-wide statistics. After configuring the API in the plugin settings, run a manual check to verify connectivity and view updated metrics immediately.
 
-![Dashboard Overview](./images/wp-dashboard.png)
 
-### Blocked IPs
-WordPress plugin: Blocked IPs show IP + reason, auto-release time, and an Unblock button. Unblocked IPs may be re-blocked.
 
-![Blocked IPs](./images/wp-blocked-ips.png)
-
-### Main Dashboard (Stats)
-Single view of protection metrics, traffic trends, recent activity, and quick actions with basic filters and alerts.
-
-![Main Dashboard](./images/user-dashboard.png)
-
-### User API
-Shows Domain name, API key and request usage status. Use the verify action in your wp-plugin or script to confirm connectivity credentials. Keep the key secret.
-
-![User API](./images/user-api.png)
-
-### User SHIELD
-Create and manage security shields with configurable rules and quick enable/disable controls.
-
-![User SHIELD](./images/user-shield.png)
-
-### Script BLOCKING IPS
-This script blocks specified IPv4 and IPv6 addresses or CIDR ranges by adding idempotent deny or drop rules to mitigate abusive traffic.
-
-![Script BLOCKING IPS](./images/script-blocking-ips.png)
-
-### Script CONFIG
-Central configuration for the blocking script, specifying API credentials and path to you log file.
-
-![Script CONFIG](./images/script-config.png)
 

@@ -30,3 +30,32 @@ Server-side alternatives:
 - If activation fails, verify your WordPress/PHP meets the plugin’s requirements
 - For self‑hosting, ensure your server endpoint is reachable from your site
 - If you self-host the BE Client, make sure it is scheduled via the system cron to run every 5 minutes (see ../be-client-install-script/README.md or ../be-client/README.md)
+
+## Screenshots
+
+Use the WordPress plugin or the server script to block malicious traffic, bad bots, and automated attacks.
+
+### Dashboard Overview
+This is the WordPress plugin dashboard showing API status and site-wide statistics. After configuring the API in the plugin settings, run a manual check to verify connectivity and view updated metrics immediately.
+
+![Dashboard Overview](./images/wp-dashboard.png)
+
+### Blocked IPs
+WordPress plugin: Blocked IPs show IP + reason, auto-release time, and an Unblock button. Unblocked IPs may be re-blocked.
+
+![Blocked IPs](./images/wp-blocked-ips.png)
+
+### Main Dashboard (Stats)
+Single view of protection metrics, traffic trends, recent activity, and quick actions with basic filters and alerts.
+
+![Main Dashboard](./images/user-dashboard.png)
+
+### User API
+Shows Domain name, API key and request usage status. Use the verify action in your wp-plugin or script to confirm connectivity credentials. Keep the key secret.
+
+![User API](./images/user-api.png)
+
+### User SHIELD
+Create and manage security shields with configurable rules and quick enable/disable controls.
+
+![User SHIELD](./images/user-shield.png)
