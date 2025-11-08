@@ -38,7 +38,7 @@ Use the WordPress plugin or the server script to block malicious traffic, bad bo
 ### Dashboard Overview
 This is the WordPress plugin dashboard showing API status and site-wide statistics. After configuring the API in the plugin settings, run a manual check to verify connectivity and view updated metrics immediately.
 
-![Dashboard Overview](./images/wp-dashboard.png)
+![Dashboard Overview](https://github.com/sofset-dev/boteraser/blob/main/images/wp-dashboard.png)
 
 ### Blocked IPs
 WordPress plugin: Blocked IPs show IP + reason, auto-release time, and an Unblock button. Unblocked IPs may be re-blocked.
