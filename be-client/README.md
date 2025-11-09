@@ -66,9 +66,9 @@ Install the script with the automated installer or set it up manually—both del
 ### Script BLOCKING IPS
 This script blocks specified IPv4 and IPv6 addresses or CIDR ranges by adding idempotent deny or drop rules to mitigate abusive traffic.
 
-![Script BLOCKING IPS](https://github.com/sofset-dev/boteraser/blob/main/images/script-blocking-ips.png)
+![Script BLOCKING IPS](../images/script-blocking-ips.png)
 
 ### Script CONFIG
 Central configuration for the blocking script, specifying API credentials and path to you log file.
 
-![Script CONFIG](https://github.com/sofset-dev/boteraser/blob/main/images/script-config.png)
+![Script CONFIG](../images/script-config.png)
