@@ -55,3 +55,14 @@ Use absolute paths; create `/var/log/` directory if missing.
 - Verify the service status (the installer will indicate how)
 - Keep the script folder for re-runs or reference
 - For advanced/fully manual control, see: ../be-client/README.md
+
+## Screenshots
+
+Install the script with the automated installer or set it up manually—both deliver the same protection. Below is example screenshot showing the BE Client installation process:
+
+### Automated Installer in Action
+The `be-install` script guides you through the setup, installing dependencies and configuring the BE Client to block abusive traffic automatically.
+
+![BE Install Script](../images/be-install.png)
+
+

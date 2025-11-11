@@ -57,8 +57,6 @@ chmod +x be-client 2>/dev/null || true
 - Look for additional docs (README/INSTALL) in the extracted directory for version‑specific instructions.
 - Prefer the one‑command automated install? See: ../be-client-install-script/README.md
 
-Screenshots
-
 ## Screenshots
 
 Install the script with the automated installer or set it up manually—both deliver the same protection. Below are some example screenshots showing the BE Client in action:
