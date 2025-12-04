@@ -16,12 +16,17 @@ One-command automated setup for VPS or dedicated servers. Handles dependencies a
 
 Full control manual installation for VPS or dedicated servers. Choose this if you need step-by-step customization.
 
-### 3. **Manual Server Install Pro**
+### 3. **Automated Server Install Pro**
+📁 [`be-client-pro-install-script/README.md`](be-client-pro-install-script/README.md)
+
+One-command automated setup for the Pro version. Installs dependencies and configures full server protection automatically.
+
+### 4. **Manual Server Install Pro**
 📁 [`be-client-pro/README.md`](be-client-pro/README.md)
 
 Advanced server-wide protection for VPS or dedicated servers. Protects your **entire server** across all services (SSH, FTP, email, databases, etc.), not just web traffic. Premium pricing justified by protecting multiple services with a single solution, eliminating the need for separate security tools per service.
 
-### 4. **WordPress Plugin**
+### 5. **WordPress Plugin**
 📁 [`wordpress-plugin/README.md`](wordpress-plugin/README.md)
 
 Easy WordPress integration. Install directly through your WordPress admin panel without managing a server.
