@@ -42,7 +42,7 @@ Each folder contains a detailed README.md with prerequisites, installation steps
 Step-by-step setup guide for WordPress: install the Boteraser plugin, connect it using your unique API key, configure custom protection rules and exclusions based on your needs, and verify that real-time bot blocking is working correctly on your site.
 
 ### How to Install Boteraser Script on Linux Web Server
-[![Watch the installation guide](https://img.youtube.com/vi/VUWcryKYGsE/0.jpg)](https://youtu.be/VUWcryKYGsE)
+[![Watch the installation guide](https://img.youtube.com/vi/6K6kgR70brU/0.jpg)](https://youtu.be/6K6kgR70brU)
 
 Step-by-step installation guide for the be-client script on Linux web servers. Learn how to protect your web server with manual installation, configure the script for optimal security, and verify that bot blocking is working correctly.
 
