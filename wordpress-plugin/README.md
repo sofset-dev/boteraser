@@ -41,7 +41,7 @@ This is the WordPress plugin dashboard showing API status and site-wide statisti
 ![Dashboard Overview](../images/wp-dashboard.png)
 
 ### Blocked IPs
-WordPress plugin: Blocked IPs show IP + reason, auto-release time, and an Unblock button. Unblocked IPs may be re-blocked.
+WordPress plugin: Blocked IPs show the IP address, block time, auto-release time, and an Unblock button. Unblocked IPs may be re-blocked.
 
 ![Blocked IPs](../images/wp-blocked-ips.png)
 
