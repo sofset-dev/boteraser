@@ -1,29 +1,29 @@
 # BE Client PRO (Manual VPS/Dedicated Install)
 
-Short description: Advanced network-level protection client that monitors **all network traffic** in real-time. Unlike the standard BE Client which analyzes web server logs, BE Client PRO uses tcpdump to capture and analyze live network packets—protecting every service on your server.
+Short description: Advanced network-level threat detection client that monitors **all network traffic** in real-time. Unlike the standard BE Client which analyzes web server logs, BE Client PRO uses tcpdump to capture and analyze live network packets across every service on your server.
 
-## 🛡️ Complete Server Protection
+## 🛡️ Comprehensive Server Monitoring
 
-BE Client PRO operates at the **network layer**, providing protection for ALL protocols and services:
+BE Client PRO operates at the **network layer**, monitoring ALL protocols and services:
 
 - **HTTP/HTTPS** (ports 80, 443) — Web applications, APIs, CDN
-- **SSH** (port 22) — Brute force prevention, unauthorized access blocking
-- **FTP/SFTP** (ports 21, 22) — File transfer security
-- **MySQL/MariaDB** (port 3306) — Database intrusion prevention
-- **PostgreSQL** (port 5432) — Database attack mitigation
-- **MongoDB** (port 27017) — NoSQL protection
-- **Redis** (port 6379) — Cache server security
-- **SMTP/IMAP/POP3** (ports 25, 465, 587, 993, 995) — Email server protection
-- **DNS** (port 53) — DNS amplification attack prevention
-- **VPN/OpenVPN** (port 1194) — VPN server protection
-- **Docker API** (ports 2375, 2376) — Container security
-- **Kubernetes** (ports 6443, 10250) — K8s cluster protection
-- **Game Servers** (Minecraft 25565, etc.) — DDoS mitigation
-- **ANY TCP/UDP service** — Full network coverage
+- **SSH** (port 22) — Brute force attack detection, unauthorized access attempts
+- **FTP/SFTP** (ports 21, 22) — File transfer security monitoring
+- **MySQL/MariaDB** (port 3306) — Database intrusion attempt detection
+- **PostgreSQL** (port 5432) — Database attack pattern recognition
+- **MongoDB** (port 27017) — NoSQL threat monitoring
+- **Redis** (port 6379) — Cache server threat detection
+- **SMTP/IMAP/POP3** (ports 25, 465, 587, 993, 995) — Email server threat monitoring
+- **DNS** (port 53) — DNS amplification attack detection
+- **VPN/OpenVPN** (port 1194) — VPN server threat monitoring
+- **Docker API** (ports 2375, 2376) — Container security monitoring
+- **Kubernetes** (ports 6443, 10250) — K8s cluster threat detection
+- **Game Servers** (Minecraft 25565, etc.) — DDoS attack pattern detection
+- **ANY TCP/UDP service** — Full-spectrum network monitoring
 
 ## When to use
-- You need protection for **all services**, not just web traffic
-- You want real-time network analysis
+- You need monitoring across **all services**, not just web traffic
+- You want real-time network traffic analysis
 - Your server runs SSH, databases, mail servers, or other non-HTTP services
 - You prefer manual installation with full control
 
@@ -81,11 +81,11 @@ sudo ./be-client-pro
 - Blocked IPs auto-expire after 24 hours
 - Supports both IPv4 and IPv6 (dual-stack)
 - Uses ipset + iptables for high-performance O(1) blocking
-- For web-only protection with bot name detection, use standard BE Client
+- For web-only monitoring with bot name detection, use standard BE Client
 
 ## Screenshots
 
-BE Client PRO provides comprehensive network-level protection. Below are example screenshots:
+BE Client PRO provides comprehensive network-level monitoring. Below are example screenshots:
 
 ### Script Execution
 Real-time network traffic capture, analysis, and IP blocking in action.
@@ -96,3 +96,6 @@ Real-time network traffic capture, analysis, and IP blocking in action.
 Simple configuration with API key and network interface settings.
 
 ![BE Client PRO Config](../images/be-client-pro-config.png)
+
+## Disclaimer
+Boteraser PRO is designed to monitor network traffic and block known malicious IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.

@@ -59,14 +59,17 @@ chmod +x be-client 2>/dev/null || true
 
 ## Screenshots
 
-Install the script with the automated installer or set it up manually—both deliver the same protection. Below are some example screenshots showing the BE Client in action:
+Install the script with the automated installer or set it up manually—both provide the same monitoring functionality. Below are some example screenshots showing the BE Client in action:
 
-### Script BLOCKING IPS
-This script blocks specified IPv4 and IPv6 addresses or CIDR ranges by adding idempotent deny or drop rules to mitigate abusive traffic.
+### Script Analyzing and Blocking IPs
+This script analyzes web server logs and blocks identified malicious IPv4 and IPv6 addresses or CIDR ranges by adding firewall rules to help mitigate abusive traffic.
 
 ![Script BLOCKING IPS](../images/script-blocking-ips.png)
 
 ### Script CONFIG
-Central configuration for the blocking script, specifying API credentials and path to you log file.
+Central configuration for the blocking script, specifying API credentials and path to your log file.
 
 ![Script CONFIG](../images/script-config.png)
+
+## Disclaimer
+Boteraser is designed to analyze web server logs and block identified malicious IPs. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.
