@@ -58,11 +58,13 @@ Use absolute paths; create `/var/log/` directory if missing.
 
 ## Screenshots
 
-Install the script with the automated installer or set it up manually—both deliver the same protection. Below is example screenshot showing the BE Client installation process:
+Install the script with the automated installer or set it up manually—both provide the same blocking functionality. Below is example screenshot showing the BE Client installation process:
 
 ### Automated Installer in Action
-The `be-install` script guides you through the setup, installing dependencies and configuring the BE Client to block abusive traffic automatically.
+The `be-install` script guides you through the setup, installing dependencies and configuring the BE Client to detect and block abusive traffic automatically.
 
 ![BE Install Script](../images/be-install.png)
 
+## Disclaimer
+Boteraser is designed to analyze web server logs and block identified malicious IPs. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.
 

@@ -1,12 +1,12 @@
 # BE Client PRO Install Script (Recommended)
 
-Short description: Automated installer that sets up the BE Client PRO on your VPS or dedicated server with minimal interaction. Provides full server protection across all services.
+Short description: Automated installer that sets up the BE Client PRO on your VPS or dedicated server with minimal interaction. Monitors network traffic and blocks suspicious IPs across all network services.
 
 ## Why this
 - One-command style setup
 - Handles common dependencies and system wiring for you
 - Best option if you don't need step-by-step manual control
-- Protects your entire server, not just web traffic
+- Monitors your entire server, not just web traffic
 
 Manual install alternative: ../be-client-pro/README.md
 
@@ -67,9 +67,9 @@ Use absolute paths; create `/var/log/` directory if missing.
 
 | Feature | Description |
 |---------|-------------|
-| 🛡️ Full Server Protection | Protects all services, not just web traffic |
+| 🛡️ Server-wide Monitoring | Monitors and blocks threats across all services, not just web traffic |
 | 🔍 Real-time Traffic Analysis | Network packet capture via tcpdump |
-| 🌐 Dual-stack Support | IPv4 and IPv6 protection |
+| 🌐 Dual-stack Support | IPv4 and IPv6 blocking capabilities |
 | ⚡ High-performance Blocking | ipset-based firewall rules |
 | ⏱️ Auto-expiring Blocks | 24-hour timeout on blocked IPs |
 
@@ -78,11 +78,11 @@ Use absolute paths; create `/var/log/` directory if missing.
 | Feature | Standard | PRO |
 |---------|----------|-----|
 | Web traffic protection | ✅ | ✅ |
-| Full server protection | ❌ | ✅ |
+| Server-wide monitoring | ❌ | ✅ |
 | Requires access.log | ✅ | ❌ |
 | Network-level monitoring | ❌ | ✅ |
-| IPv6 support | ❌ | ✅ |
-| All services protected | ❌ | ✅ |
+| IPv6 support | ✅ | ✅ |
+| All services monitored | ❌ | ✅ |
 
 ## Next steps
 - Verify the service status (the installer will indicate how)
@@ -113,9 +113,12 @@ ipset flush boteraser-pro-v6
 
 ## Screenshots
 
-Install the script with the automated installer or set it up manually—both deliver the same protection. Below is example screenshot showing the BE Client PRO installation process:
+Install the script with the automated installer or set it up manually—both provide the same monitoring capabilities. Below is example screenshot showing the BE Client PRO installation process:
 
 ### Automated Installer in Action
-The `be-install-pro` script guides you through the setup, installing dependencies and configuring the BE Client PRO to protect your entire server automatically.
+The `be-install-pro` script guides you through the setup, installing dependencies and configuring the BE Client PRO to monitor your entire server automatically.
 
 ![BE Install PRO Script](../images/be-install-pro.png)
+
+## Disclaimer
+Boteraser PRO is designed to monitor network traffic and block known malicious IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.
