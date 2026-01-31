@@ -19,7 +19,7 @@ Full control manual installation for VPS or dedicated servers. Choose this if yo
 ### 3. **Automated Server Install Pro**
 📁 [`be-client-pro-install-script/README.md`](be-client-pro-install-script/README.md)
 
-One-command automated setup for the Pro version. Installs dependencies and configures full server protection automatically.
+One-command automated setup for the Pro version. Installs dependencies and configures advanced server protection automatically.
 
 ### 4. **Manual Server Install Pro**
 📁 [`be-client-pro/README.md`](be-client-pro/README.md)

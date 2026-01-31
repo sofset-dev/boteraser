@@ -33,7 +33,7 @@ Server-side alternatives:
 
 ## Screenshots
 
-Use the WordPress plugin or the server script to block malicious traffic, bad bots, and automated attacks.
+Use the WordPress plugin to block bad bots based on their behavior, preventing malicious traffic.
 
 ### Dashboard Overview
 This is the WordPress plugin dashboard showing API status and site-wide statistics. After configuring the API in the plugin settings, run a manual check to verify connectivity and view updated metrics immediately.
