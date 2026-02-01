@@ -59,3 +59,6 @@ Shows Domain name, API key and request usage status. Use the verify action in yo
 Create and manage security shields with configurable rules and quick enable/disable controls.
 
 ![User SHIELD](../images/user-shield.png)
+
+## Disclaimer
+Boteraser is designed to monitor network traffic and block known malicious IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.

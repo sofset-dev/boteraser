@@ -46,9 +46,8 @@ Step-by-step setup guide for WordPress: install the Boteraser plugin, connect it
 
 Step-by-step installation guide for the be-client script on Linux web servers. Learn how to protect your web server with manual installation, configure the script for optimal security, and verify that bot blocking is working correctly.
 
-
-
-
+## Disclaimer
+Boteraser is designed to monitor network traffic and block known malicious IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.
 
 
 
