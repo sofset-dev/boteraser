@@ -98,4 +98,4 @@ Simple configuration with API key and network interface settings.
 ![BE Client PRO Config](../images/be-client-pro-config.png)
 
 ## Disclaimer
-Boteraser PRO is designed to monitor network traffic and block known malicious IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.
+Boteraser PRO is designed to monitor network traffic and block known blacklisted IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.

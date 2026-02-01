@@ -33,7 +33,7 @@ Server-side alternatives:
 
 ## Screenshots
 
-Use the WordPress plugin to block bad bots based on their behavior, preventing malicious traffic.
+Use the WordPress plugin to block bad bots based on their behavior, preventing unwanted traffic.
 
 ### Dashboard Overview
 This is the WordPress plugin dashboard showing API status and site-wide statistics. After configuring the API in the plugin settings, run a manual check to verify connectivity and view updated metrics immediately.
@@ -61,4 +61,4 @@ Create and manage security shields with configurable rules and quick enable/disa
 ![User SHIELD](../images/user-shield.png)
 
 ## Disclaimer
-Boteraser is designed to monitor network traffic and block known malicious IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.
+Boteraser is designed to monitor network traffic and block known unwanted bots and blacklisted IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.

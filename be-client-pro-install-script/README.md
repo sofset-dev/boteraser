@@ -121,4 +121,4 @@ The `be-install-pro` script guides you through the setup, installing dependencie
 ![BE Install PRO Script](../images/be-install-pro.png)
 
 ## Disclaimer
-Boteraser PRO is designed to monitor network traffic and block known malicious IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.
+Boteraser PRO is designed to monitor network traffic and block known blacklisted IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.
