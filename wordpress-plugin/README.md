@@ -2,6 +2,9 @@
 
 Short description: Install this plugin on your WordPress site to integrate with the Boteraser service. Choose this if you want a website-level integration without managing a server yourself.
 
+## Disclaimer
+This is powerful security software and should be used responsibly. It is provided "AS-IS" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
+
 Server-side alternatives:
 - Automated server install (recommended): ../be-client-install-script/README.md
 - Manual server install: ../be-client/README.md
@@ -59,6 +62,3 @@ Shows Domain name, API key and request usage status. Use the verify action in yo
 Create and manage security shields with configurable rules and quick enable/disable controls.
 
 ![User SHIELD](../images/user-shield.png)
-
-## Disclaimer
-Boteraser is designed to monitor network traffic and block known unwanted bots and blacklisted IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.

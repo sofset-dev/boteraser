@@ -2,6 +2,9 @@
 
 Bot protection solution with flexible deployment options.
 
+## Disclaimer
+This is powerful security software and should be used responsibly. It is provided "AS-IS" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
+
 ## Installation Options
 
 Choose the method that best suits your needs:
@@ -45,9 +48,5 @@ Step-by-step setup guide for WordPress: install the Boteraser plugin, connect it
 [![Watch the installation guide](https://img.youtube.com/vi/6K6kgR70brU/0.jpg)](https://youtu.be/6K6kgR70brU)
 
 Step-by-step installation guide for the be-client script on Linux web servers. Learn how to protect your web server with manual installation, configure the script for optimal security, and verify that bot blocking is working correctly.
-
-## Disclaimer
-Boteraser is designed to monitor network traffic and block unwanted threats based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.
-
 
 

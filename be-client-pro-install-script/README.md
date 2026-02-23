@@ -2,6 +2,9 @@
 
 Short description: Automated installer that sets up the BE Client PRO on your VPS or dedicated server with minimal interaction. Monitors network traffic and blocks suspicious IPs across all network services.
 
+## Disclaimer
+This is powerful security software and should be used responsibly. It is provided "AS-IS" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
+
 ## Why this
 - One-command style setup
 - Handles common dependencies and system wiring for you
@@ -119,6 +122,3 @@ Install the script with the automated installer or set it up manually—both pro
 The `be-install-pro` script guides you through the setup, installing dependencies and configuring the BE Client PRO to monitor your entire server automatically.
 
 ![BE Install PRO Script](../images/be-install-pro.png)
-
-## Disclaimer
-Boteraser PRO is designed to monitor network traffic and block known blacklisted IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.

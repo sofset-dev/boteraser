@@ -2,6 +2,9 @@
 
 Short description: Self-hosted backend client to run on your own VPS or dedicated server. Choose this if you prefer full control and a manual setup.
 
+## Disclaimer
+This is powerful security software and should be used responsibly. It is provided "AS-IS" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
+
 ## When to use
 - You need a manual install on your own server
 - You want to customize each step
@@ -70,6 +73,3 @@ This script analyzes web server logs and blocks identified blacklisted IPv4 and 
 Central configuration for the blocking script, specifying API credentials and path to your log file.
 
 ![Script CONFIG](../images/script-config.png)
-
-## Disclaimer
-Boteraser is designed to analyze web server logs and block identified unwanted bots and blacklisted IPs. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.

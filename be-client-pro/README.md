@@ -2,6 +2,9 @@
 
 Short description: Advanced network-level threat detection client that monitors **all network traffic** in real-time. Unlike the standard BE Client which analyzes web server logs, BE Client PRO uses tcpdump to capture and analyze live network packets across every service on your server.
 
+## Disclaimer
+This is powerful security software and should be used responsibly. It is provided "AS-IS" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
+
 ## 🛡️ Comprehensive Server Monitoring
 
 BE Client PRO operates at the **network layer**, monitoring ALL protocols and services:
@@ -96,6 +99,3 @@ Real-time network traffic capture, analysis, and IP blocking in action.
 Simple configuration with API key and network interface settings.
 
 ![BE Client PRO Config](../images/be-client-pro-config.png)
-
-## Disclaimer
-Boteraser PRO is designed to monitor network traffic and block known blacklisted IPs based on threat intelligence. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.

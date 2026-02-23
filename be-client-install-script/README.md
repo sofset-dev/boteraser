@@ -2,6 +2,9 @@
 
 Short description: Automated installer that sets up the BE Client on your VPS or dedicated server with minimal interaction.
 
+## Disclaimer
+This is powerful security software and should be used responsibly. It is provided "AS-IS" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
+
 ## Why this
 - One-command style setup
 - Handles common dependencies and system wiring for you
@@ -64,7 +67,4 @@ Install the script with the automated installer or set it up manually—both pro
 The `be-install` script guides you through the setup, installing dependencies and configuring the BE Client to detect and block abusive traffic automatically.
 
 ![BE Install Script](../images/be-install.png)
-
-## Disclaimer
-Boteraser is designed to analyze web server logs and block identified unwanted bots and blacklisted IPs. While it provides an additional layer of security, no security solution can guarantee complete protection against all threats. Users are responsible for implementing comprehensive security practices.
 
