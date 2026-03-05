@@ -3,7 +3,7 @@
 Short description: Install this plugin on your WordPress site to integrate with the Boteraser service. Choose this if you want a website-level integration without managing a server yourself.
 
 ## Disclaimer
-This is powerful security software and should be used responsibly. It is provided "AS-IS" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading, installing or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
+DISCLAIMER: This is powerful security software and should be used responsibly. It is provided "AS-IS" and "AS-AVAILABLE" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading, installing or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
 
 Server-side alternatives:
 - Automated server install (recommended): ../be-client-install-script/README.md
