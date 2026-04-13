@@ -3,7 +3,7 @@
 Short description: Automated installer that sets up the BE Client on your VPS or dedicated server with minimal interaction.
 
 ## Disclaimer
-DISCLAIMER: This is powerful security software and should be used responsibly. It is provided "AS-IS" and "AS-AVAILABLE" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading, installing or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
+DISCLAIMER: This is powerful security software that runs with elevated privileges and modifies your system. It is provided "AS-IS" and "AS-AVAILABLE" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading, installing or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
 
 ## Why this
 - One-command style setup
@@ -14,45 +14,19 @@ Manual install alternative: ../be-client/README.md
 
 ## Prerequisites
 - Linux server (VPS or Dedicated)
-- Shell access (bash) with sudo/root privileges
-- tar installed (to extract the archive)
+- Shell access (bash) with root privileges
 
 ## Quick start
-1. Copy the installer archive to your server and extract it:
+1. Run the one-line installer:
 
 ```bash
-cd /path/where/you/placed/the/archive
-ls -lh be-client-install-script.tar.gz
-sudo tar -xzf be-client-install-script.tar.gz
-cd be-client-install-script*/
+curl -fsSL https://github.com/sofset-dev/boteraser/raw/refs/heads/main/be-client-install-script/be-install.sh | sudo bash
 ```
 
-2. Run the installer script:
-
-```bash
-chmod +x be-install
-sudo ./be-install
-```
-
-3. Follow the prompts. The script will:
+2. Follow the prompts. The script will:
 - Install required components (as needed)
 - Configure and start the BE Client
 - Print where to check status/logs
-
-## Cron scheduling (every 5 minutes)
-Run every 5 minutes via cron:
-
-Without logging:
-```bash
-*/5 * * * * /absolute/path/to/your/be-client >/dev/null 2>&1
-```
-
-With logging:
-```bash
-*/5 * * * * /absolute/path/to/your/be-client >>/var/log/be-client.log 2>&1
-```
-
-Use absolute paths; create `/var/log/` directory if missing.
 
 ## Next steps
 - Verify the service status (the installer will indicate how)

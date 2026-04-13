@@ -19,26 +19,16 @@ Manual install alternative: ../be-client-pro/README.md
 - tar installed (to extract the archive)
 
 ## Quick start
-1. Copy the installer archive to your server and extract it:
+1. Run the one-line installer:
 
 ```bash
-cd /path/where/you/placed/the/archive
-ls -lh be-client-pro-install-script.tar.gz
-sudo tar -xzf be-client-pro-install-script.tar.gz
-cd be-client-pro-install-script*/
+curl -fsSL https://github.com/sofset-dev/boteraser/raw/refs/heads/main/be-client-pro-install-script/be-install-pro.sh | sudo bash
 ```
 
-2. Run the installer script:
-
-```bash
-chmod +x be-install-pro
-sudo ./be-install-pro
-```
-
-3. Follow the prompts. The script will:
-- Install required components (iptables, ipset, tcpdump, curl, awk)
+2. Follow the prompts. The script will:
+- Install required components (iptables, ipset)
 - Configure network interface monitoring
-- Set up the BE Client PRO
+- Set up the BE Client PRO as a systemd service
 - Print where to check status/logs
 
 ## Configuration options
@@ -49,22 +39,7 @@ During installation, you'll be asked for:
 |--------|-------------|---------|
 | Install location | Directory where BE Client PRO will be installed | `/opt` |
 | API Key | Your Boteraser PRO API key from user dashboard | `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` |
-| Network Interface | Interface to monitor (`any` for all interfaces) | `any`, `eth0`, `ens3` |
-
-## Cron scheduling (every 5 minutes)
-Run every 5 minutes via cron:
-
-Without logging:
-```bash
-*/5 * * * * cd /opt/boteraser-pro && ./be-client-pro >/dev/null 2>&1
-```
-
-With logging:
-```bash
-*/5 * * * * cd /opt/boteraser-pro && ./be-client-pro >>/var/log/be-client-pro.log 2>&1
-```
-
-Use absolute paths; create `/var/log/` directory if missing.
+| Network Interface | Interface to monitor (`auto` for all interfaces) | `auto`, `eth0`, `ens3` |
 
 ## PRO Features
 

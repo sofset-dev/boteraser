@@ -3,7 +3,7 @@
 Short description: Advanced network-level threat detection client that monitors **all network traffic** in real-time. Unlike the standard BE Client which analyzes web server logs, BE Client PRO uses tcpdump to capture and analyze live network packets across every service on your server.
 
 ## Disclaimer
-DISCLAIMER: This is powerful security software and should be used responsibly. It is provided "AS-IS" and "AS-AVAILABLE" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading, installing or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
+DISCLAIMER: This is powerful security software that runs with elevated privileges and modifies your system. It is provided "AS-IS" and "AS-AVAILABLE" without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. Your use of the software is at your own risk. By downloading, installing or using this software, you agree to our [Terms of Service](https://boteraser.com/terms-of-service/) and [Privacy Policy](https://boteraser.com/privacy-policy/).
 
 ## 🛡️ Comprehensive Server Monitoring
 
@@ -33,54 +33,95 @@ BE Client PRO operates at the **network layer**, monitoring ALL protocols and se
 ## Prerequisites
 - Linux server (VPS or Dedicated)
 - Shell access (bash) with sudo/root privileges
-- tcpdump installed
-- ipset installed (auto-installed if missing)
+- iptables installed
+- ipset installed
+- systemd
 
 ## Quick start
-1. Copy the archive to your server and extract it:
+
+1. Download be-client-pro-latest.tar.gz to your preferred location (recommended: /opt):
 
 ```bash
-cd /path/where/you/placed/the/archive
-ls -lh be-client-pro-latest.tar.gz
-sudo tar -xzf be-client-pro-latest.tar.gz
-cd boteraser-pro/
+cd /opt
+wget https://github.com/sofset-dev/boteraser/raw/refs/heads/main/be-client-pro/be-client-pro-latest.tar.gz
 ```
 
-2. Configure your API key:
+2. Extract the archive and enter the directory:
 
 ```bash
-sudo nano be-pro.conf
+tar -xzvf be-client-pro-latest.tar.gz
+cd boteraser-pro
 ```
 
-Add your PRO API key:
-```bash
-API_KEY_PRO="your-pro-api-key-here"
-```
-
-3. Run the client:
+3. Edit the configuration file. Open be-pro.conf with a text editor:
 
 ```bash
-chmod +x be-client-pro 2>/dev/null || true
-sudo ./be-client-pro
+nano be-pro.conf
 ```
-
-## Schedule via cron (every 5 minutes)
-
-### With logging
+or
 ```bash
-*/5 * * * * /absolute/path/to/your/be-client-pro >> /var/log/be-client-pro.log 2>&1
+vi be-pro.conf
 ```
 
-### Without logging (silent)
+In be-pro.conf, enter:
+
+- Your API KEY – you can get it at: https://user.boteraser.com/api.php
+- Set `INTERFACE="auto"` to use the first detected interface, `"any"` for all interfaces except loopback, or specify one directly (e.g., `eth0`). Example:
+
+```
+API_KEY_PRO="<YOUR API KEY>"
+INTERFACE="auto"
+```
+
+Save and exit.
+
+4. Create a systemd service file using a text editor such as nano or vi:
+
 ```bash
-*/5 * * * * /absolute/path/to/your/be-client-pro >/dev/null 2>&1
+vi /etc/systemd/system/be-client-pro.service
 ```
 
-**Note:** Use absolute paths. The script **must run as root** for tcpdump and iptables access.
+Then add this in the file:
+
+```ini
+[Unit]
+Description=Boteraser PRO Client
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/boteraser-pro
+ExecStart=/opt/boteraser-pro/be-client-pro
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Save and exit.
+
+5. Reload systemd, enable the service, and start it:
+
+```bash
+systemctl daemon-reload
+systemctl enable be-client-pro
+systemctl start be-client-pro
+```
+
+6. Check the service status and view logs:
+
+```bash
+systemctl status be-client-pro
+journalctl -u be-client-pro -f
+```
+
+✅ That's it! The Boteraser PRO client will now run every 5 minutes and help protect your server automatically.
 
 ## Notes
 - BE Client PRO requires a PRO subscription
-- The script captures live network traffic for 30 seconds (configurable)
+- Runs as a daemon — continuously monitors network traffic
+- Analyzes last 10000 packets every 5 minutes
 - Blocked IPs auto-expire after 24 hours
 - Supports both IPv4 and IPv6 (dual-stack)
 - Uses ipset + iptables for high-performance O(1) blocking
