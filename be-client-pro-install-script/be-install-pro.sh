@@ -33,6 +33,49 @@ print_info() {
     echo -e "ℹ️  $1"
 }
 
+# Escape a value for safe use on the replacement side of a sed s|...|...| command
+sed_escape() {
+    printf '%s' "$1" | sed -e 's/[&|\\]/\\&/g'
+}
+
+# Set KEY="value" in a conf file (replaces the whole line).
+# Usage: conf_set <file> <KEY> <value>
+conf_set() {
+    sed -i -e "s|^$2=.*|$2=\"$(sed_escape "$3")\"|" "$1"
+}
+
+# Prompt for a value showing its [default]. Enter accepts the default.
+# Result is placed in the global REPLY_VALUE.
+prompt_default() {
+    local label="$1" default="$2" input
+    if [[ -n "$default" ]]; then
+        echo -n -e "👉 $label [$default]: "
+    else
+        echo -n -e "👉 $label (optional, Enter to leave blank): "
+    fi
+    read -r input
+    REPLY_VALUE="${input:-$default}"
+}
+
+# Prompt for a secret (input hidden). Enter keeps the current default.
+prompt_secret() {
+    local label="$1" default="$2" input
+    echo -n -e "👉 $label (hidden, Enter to keep default): "
+    read -rs input
+    echo ""
+    REPLY_VALUE="${input:-$default}"
+}
+
+# Ask whether the user wants to customize an optional section.
+# Returns 0 (yes) or 1 (keep defaults).
+section_customize() {
+    local name="$1" ans
+    echo ""
+    echo -n -e "👉 Configure $name now? (Enter = keep defaults / y = customize): "
+    read -r ans
+    [[ "$ans" == "y" || "$ans" == "Y" ]]
+}
+
 # Check root privileges
 if [[ $EUID -ne 0 ]]; then
     print_header "BOTERASER PRO INSTALLER"
@@ -212,11 +255,59 @@ ask_configuration() {
         available_interfaces=$(get_network_interfaces)
         echo -e "🌐 Network Interface Configuration"
         echo -e "Available interfaces: $available_interfaces"
-        echo -e "Enter 'auto' to auto-detect interface (recommended)"
+        echo -e "Enter 'auto' to auto-detect, 'any' for all interfaces, or a name (e.g. eth0)"
         echo -n -e "👉 Interface [auto]: "
         read network_interface
         if [[ -z "$network_interface" ]]; then
             network_interface="auto"
+        fi
+        echo ""
+
+        print_info "Press Enter at any prompt to accept the [default] shown in brackets."
+        echo ""
+
+        # Domain / block timeout
+        echo -e "🌐 Domain (optional — used in email reports; hostname if left blank)"
+        prompt_default "Domain" ""; domain="$REPLY_VALUE"
+        prompt_default "Server blocklist block timeout in seconds" "86400"; block_timeout="$REPLY_VALUE"
+
+        # --- Email reports (SMTP) ---
+        smtp_host=""; smtp_port="587"; smtp_user=""; smtp_pass=""; smtp_from=""
+        smtp_security="starttls"; notify_email=""; report_interval="24h"
+        if section_customize "email reports (SMTP)"; then
+            prompt_default "SMTP host" "$smtp_host"; smtp_host="$REPLY_VALUE"
+            prompt_default "SMTP port" "$smtp_port"; smtp_port="$REPLY_VALUE"
+            prompt_default "SMTP user" "$smtp_user"; smtp_user="$REPLY_VALUE"
+            prompt_secret  "SMTP password" "$smtp_pass"; smtp_pass="$REPLY_VALUE"
+            prompt_default "From address (blank = SMTP user)" "$smtp_from"; smtp_from="$REPLY_VALUE"
+            prompt_default "Security (starttls|tls|none)" "$smtp_security"; smtp_security="$REPLY_VALUE"
+            prompt_default "Notify email (report recipient)" "$notify_email"; notify_email="$REPLY_VALUE"
+            prompt_default "Report interval (6h|12h|24h)" "$report_interval"; report_interval="$REPLY_VALUE"
+        fi
+
+        # --- Brute-force protection ---
+        bf_enabled="yes"; auth_log="/var/log/auth.log"; bf_max="5"; bf_window="15"; bf_block="60"
+        if section_customize "brute-force protection"; then
+            prompt_default "Enable brute-force protection (yes|no)" "$bf_enabled"; bf_enabled="$REPLY_VALUE"
+            prompt_default "Auth log path" "$auth_log"; auth_log="$REPLY_VALUE"
+            prompt_default "Max failed attempts" "$bf_max"; bf_max="$REPLY_VALUE"
+            prompt_default "Window (minutes)" "$bf_window"; bf_window="$REPLY_VALUE"
+            prompt_default "Block duration (minutes)" "$bf_block"; bf_block="$REPLY_VALUE"
+        fi
+
+        # --- Malware scan ---
+        malware_enabled="yes"; scan_path="/var/www"; quarantine_enabled="yes"; quarantine_path="quarantine"
+        if section_customize "malware scan"; then
+            prompt_default "Enable malware scan (yes|no)" "$malware_enabled"; malware_enabled="$REPLY_VALUE"
+            prompt_default "Scan path" "$scan_path"; scan_path="$REPLY_VALUE"
+            prompt_default "Enable quarantine (yes|no)" "$quarantine_enabled"; quarantine_enabled="$REPLY_VALUE"
+            prompt_default "Quarantine path" "$quarantine_path"; quarantine_path="$REPLY_VALUE"
+        fi
+
+        # --- Vulnerability scan ---
+        vuln_enabled="yes"
+        if section_customize "vulnerability scan"; then
+            prompt_default "Enable vulnerability scan (yes|no)" "$vuln_enabled"; vuln_enabled="$REPLY_VALUE"
         fi
         echo ""
 
@@ -227,6 +318,9 @@ ask_configuration() {
         echo -e "📁 Install location:  $install_location"
         echo -e "🔑 API Key:           ${api_key:0:8}...${api_key: -4}"
         echo -e "🌐 Interface:         $network_interface"
+        echo -e "🌐 Domain:            ${domain:-<hostname>}"
+        echo -e "📧 SMTP host:         ${smtp_host:-<not set>}   Notify: ${notify_email:-<not set>}"
+        echo -e "🛡️  Brute-force: $bf_enabled   Malware: $malware_enabled   Vuln: $vuln_enabled"
         echo ""
         echo -e "Is this information correct?"
         echo -e "[y] Yes - Begin installation"
@@ -324,58 +418,66 @@ install_boteraser_pro() {
 
     echo ""
 
-    # Create be-pro.conf
-    print_info "Creating configuration file (be-pro.conf)..."
-    cat > "$install_location/boteraser-pro/be-pro.conf" << EOF
-# ============================================================================
-# IMPORTANT PRIVACY INFORMATION - PLEASE READ FIRST
-# ============================================================================
-# This software monitors network traffic on your server and sends IP addresses
-# to user.boteraser.com (EU-based service) for security threat analysis and
-# blocking of blacklisted IPs.
-#
-# Legal basis: Legitimate interest for server security (GDPR Art. 6(1)(f))
-# CCPA compliance: Data is not sold or shared (see Privacy Policy)
-#
-# Privacy Policy: https://boteraser.com/privacy-policy/
-# Terms of Service: https://boteraser.com/terms-of-service/
-
-# User consent: By setting this to "yes", you confirm that you have read,
-# understood, and agree to both our Privacy Policy and Terms of Service.
-CONSENT_ACCEPTED="yes"
-# ============================================================================
-
-# Your PRO API KEY. You can find it at: https://user.boteraser.com/api.php
-API_KEY_PRO="$api_key"
-
-# Network interface to monitor.
-# "auto" = auto-detect, or specify interface name (e.g. eth0, ens3)
-# Loopback (lo) is always excluded automatically.
-INTERFACE="$network_interface"
-EOF
-    chmod 600 "$install_location/boteraser-pro/be-pro.conf"
-    print_success "Configuration file created (permissions: 600)"
+    # Configure be-pro.conf (shipped with the package — patch values in place)
+    local conf_file="$install_location/boteraser-pro/be-pro.conf"
+    print_info "Configuring be-pro.conf..."
+    if [[ ! -f "$conf_file" ]]; then
+        print_error "be-pro.conf not found in package: $conf_file"
+        exit 1
+    fi
+    conf_set "$conf_file" CONSENT_ACCEPTED "yes"
+    conf_set "$conf_file" API_KEY_PRO      "$api_key"
+    conf_set "$conf_file" INTERFACE        "$network_interface"
+    conf_set "$conf_file" DOMAIN           "$domain"
+    conf_set "$conf_file" BLOCK_TIMEOUT    "$block_timeout"
+    conf_set "$conf_file" SMTP_HOST        "$smtp_host"
+    conf_set "$conf_file" SMTP_PORT        "$smtp_port"
+    conf_set "$conf_file" SMTP_USER        "$smtp_user"
+    conf_set "$conf_file" SMTP_PASS        "$smtp_pass"
+    conf_set "$conf_file" SMTP_FROM        "$smtp_from"
+    conf_set "$conf_file" SMTP_SECURITY    "$smtp_security"
+    conf_set "$conf_file" NOTIFY_EMAIL     "$notify_email"
+    conf_set "$conf_file" REPORT_INTERVAL  "$report_interval"
+    conf_set "$conf_file" BF_ENABLED       "$bf_enabled"
+    conf_set "$conf_file" AUTH_LOG         "$auth_log"
+    conf_set "$conf_file" BF_MAX_ATTEMPTS  "$bf_max"
+    conf_set "$conf_file" BF_WINDOW        "$bf_window"
+    conf_set "$conf_file" BF_BLOCK         "$bf_block"
+    conf_set "$conf_file" MALWARE_ENABLED  "$malware_enabled"
+    conf_set "$conf_file" SCAN_PATH        "$scan_path"
+    conf_set "$conf_file" QUARANTINE_ENABLED "$quarantine_enabled"
+    conf_set "$conf_file" QUARANTINE_PATH  "$quarantine_path"
+    conf_set "$conf_file" VULN_ENABLED     "$vuln_enabled"
+    chmod 600 "$conf_file"
+    print_success "Configuration file updated (permissions: 600)"
 
     echo ""
 
-    # Create systemd service
-    print_info "Creating systemd service file..."
+    # Install systemd service
+    print_info "Installing systemd service file..."
     cat > "$SERVICE_FILE" << EOF
 [Unit]
-Description=Boteraser PRO Client
-After=network.target
+Description=Boteraser PRO Client (traffic-fingerprinting daemon)
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
 WorkingDirectory=$install_location/boteraser-pro
-ExecStart=$install_location/boteraser-pro/be-client-pro
-Restart=always
+ExecStart=$install_location/boteraser-pro/be-client-pro --daemon
+Restart=on-failure
 RestartSec=10
+# Needs root for raw-socket capture, eBPF (JA4H over HTTPS), iptables/ipset
+# and reading the SSH auth log.
+User=root
+# eBPF maps require a high memlock limit.
+LimitMEMLOCK=infinity
 
 [Install]
 WantedBy=multi-user.target
 EOF
-    print_success "Service file created: $SERVICE_FILE"
+    chmod 644 "$SERVICE_FILE"
+    print_success "Service file installed: $SERVICE_FILE"
 
     echo ""
 
@@ -415,6 +517,24 @@ print_summary() {
     echo -e "  systemctl stop $SERVICE_NAME"
     echo -e "  systemctl restart $SERVICE_NAME"
     echo -e "  journalctl -u $SERVICE_NAME -f"
+    echo ""
+    echo -e "╔══════════════════════════════════════════════════════════════╗"
+    echo -e "║                  BEHIND A NAT OR PROXY?                      ║"
+    echo -e "╚══════════════════════════════════════════════════════════════╝"
+    print_info "Traffic from private addresses is ignored (EXCLUDE_LOCAL=\"yes\")."
+    echo -e "  This keeps the capture buffer for real visitors and is correct"
+    echo -e "  for almost every server."
+    echo ""
+    print_warning "If visitors reach this host through a NAT, load balancer or"
+    echo -e "  reverse proxy that rewrites their source address, every visitor"
+    echo -e "  looks private and nothing will be analysed. In that case edit:"
+    echo ""
+    echo -e "    $install_location/boteraser-pro/be-pro.conf"
+    echo -e "    EXCLUDE_LOCAL=\"no\""
+    echo -e "    systemctl restart $SERVICE_NAME"
+    echo ""
+    echo -e "  Check with: journalctl -u $SERVICE_NAME | grep 'TOP 30' -A 5"
+    echo -e "  Public visitor IPs listed there mean the default is fine."
     echo ""
     print_info "Boteraser PRO is now protecting your server!"
     echo ""
