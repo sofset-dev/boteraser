@@ -2,12 +2,11 @@
 
 # Configuration variables
 DOWNLOAD_URL="https://github.com/sofset-dev/boteraser/raw/refs/heads/main/be-client-pro/be-client-pro-latest.tar.gz"
-SERVICE_NAME="be-client-pro"
-SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
+SERVICE_FILE="/etc/systemd/system/be-client-pro.service"
+DEFAULT_INSTALL_LOCATION="/opt"
 
 # Function to print headers
 print_header() {
-    echo ""
     echo -e "╔══════════════════════════════════════════════════════════════╗"
     echo -e "║$(printf "%*s" $(((62-${#1})/2)) "")$1$(printf "%*s" $(((63-${#1})/2)) "")║"
     echo -e "╚══════════════════════════════════════════════════════════════╝"
@@ -53,7 +52,7 @@ prompt_default() {
     else
         echo -n -e "👉 $label (optional, Enter to leave blank): "
     fi
-    read -r input
+    read -r -u 3 input
     REPLY_VALUE="${input:-$default}"
 }
 
@@ -61,7 +60,7 @@ prompt_default() {
 prompt_secret() {
     local label="$1" default="$2" input
     echo -n -e "👉 $label (hidden, Enter to keep default): "
-    read -rs input
+    read -rs -u 3 input
     echo ""
     REPLY_VALUE="${input:-$default}"
 }
@@ -72,9 +71,25 @@ section_customize() {
     local name="$1" ans
     echo ""
     echo -n -e "👉 Configure $name now? (Enter = keep defaults / y = customize): "
-    read -r ans
+    read -r -u 3 ans
     [[ "$ans" == "y" || "$ans" == "Y" ]]
 }
+
+# When piped (curl ... | bash) stdin carries the script text itself, so a plain
+# `read` would consume script bytes instead of the user's answer. Keep the
+# terminal on fd 3 and read every prompt from there. Redirecting stdin is not an
+# option: bash is still reading the script from it.
+# /dev/tty can exist and still not be openable (no controlling terminal), so
+# probe it in a subshell before committing the real exec.
+if ( exec 3</dev/tty ) 2>/dev/null; then
+    exec 3</dev/tty
+elif [[ -t 0 ]]; then
+    exec 3<&0
+else
+    print_error "No terminal available for the interactive prompts."
+    print_info "Run the installer from an interactive terminal."
+    exit 1
+fi
 
 # Check root privileges
 if [[ $EUID -ne 0 ]]; then
@@ -189,7 +204,7 @@ ask_privacy_consent() {
     echo -n -e "👉 Your choice (y/n): "
 
     while true; do
-        read consent_answer
+        read -r -u 3 consent_answer
         if [[ "$consent_answer" == "y" || "$consent_answer" == "Y" ]]; then
             echo ""
             print_success "Privacy Policy and Terms of Service accepted"
@@ -217,7 +232,7 @@ get_network_interfaces() {
 
 validate_interface() {
     local interface="$1"
-    if [[ "$interface" == "auto" ]]; then
+    if [[ "$interface" == "auto" || "$interface" == "any" ]]; then
         return 0
     fi
     if ip link show "$interface" &> /dev/null; then
@@ -234,12 +249,11 @@ ask_configuration() {
         # Install location
         echo -e "📁 Installation Location"
         echo -e "Enter the directory where Boteraser PRO will be installed"
-        echo -e "Example: /opt"
-        echo -n -e "👉 Install location [/opt]: "
-        read install_location
-        if [[ -z "$install_location" ]]; then
-            install_location="/opt"
-        fi
+        echo -e "Press Enter to accept the default"
+        echo -n -e "👉 Install location [$DEFAULT_INSTALL_LOCATION]: "
+        read -r -u 3 install_location
+        install_location="${install_location:-$DEFAULT_INSTALL_LOCATION}"
+        install_location="${install_location%/}"
         echo ""
 
         # API key
@@ -247,7 +261,7 @@ ask_configuration() {
         echo -e "Enter your Boteraser PRO API key"
         echo -e "You can find/generate it at: https://user.boteraser.com/api.php"
         echo -n -e "👉 API Key: "
-        read api_key
+        read -r -u 3 api_key
         echo ""
 
         # Network interface
@@ -257,7 +271,7 @@ ask_configuration() {
         echo -e "Available interfaces: $available_interfaces"
         echo -e "Enter 'auto' to auto-detect, 'any' for all interfaces, or a name (e.g. eth0)"
         echo -n -e "👉 Interface [auto]: "
-        read network_interface
+        read -r -u 3 network_interface
         if [[ -z "$network_interface" ]]; then
             network_interface="auto"
         fi
@@ -326,7 +340,7 @@ ask_configuration() {
         echo -e "[y] Yes - Begin installation"
         echo -e "[n] No  - Re-enter information"
         echo -n -e "👉 Your choice (y/n): "
-        read confirm
+        read -r -u 3 confirm
         echo ""
 
         if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
@@ -334,21 +348,21 @@ ask_configuration() {
             if [[ -z "$install_location" || -z "$api_key" ]]; then
                 print_error "Install location and API key are required."
                 echo -e "Press Enter to continue..."
-                read
+                read -r -u 3
                 continue
             fi
             if [[ ! -d "$install_location" ]]; then
                 print_error "Directory does not exist: $install_location"
                 print_info "Please enter a valid path."
                 echo -e "Press Enter to continue..."
-                read
+                read -r -u 3
                 continue
             fi
             if ! validate_interface "$network_interface"; then
                 print_error "Network interface does not exist: $network_interface"
                 print_info "Available interfaces: $available_interfaces"
                 echo -e "Press Enter to continue..."
-                read
+                read -r -u 3
                 continue
             fi
             break
@@ -358,7 +372,7 @@ ask_configuration() {
         else
             print_error "Invalid input. Please enter 'y' or 'n'."
             echo -e "Press Enter to continue..."
-            read
+            read -r -u 3
         fi
     done
 }
@@ -486,14 +500,14 @@ EOF
     systemctl daemon-reload
     print_success "systemctl daemon-reload"
 
-    systemctl enable "$SERVICE_NAME"
+    systemctl enable be-client-pro
     print_success "Service enabled (starts on boot)"
 
-    systemctl start "$SERVICE_NAME"
-    if systemctl is-active --quiet "$SERVICE_NAME"; then
+    systemctl start be-client-pro
+    if systemctl is-active --quiet be-client-pro; then
         print_success "Service started successfully"
     else
-        print_warning "Service may not have started. Check: journalctl -u $SERVICE_NAME"
+        print_warning "Service may not have started. Check: journalctl -u be-client-pro"
     fi
 }
 
@@ -508,15 +522,15 @@ print_summary() {
     echo -e "📍 Install location: $install_location/boteraser-pro"
     echo -e "🔑 API Key:          Configured"
     echo -e "🌐 Interface:        $network_interface"
-    echo -e "⚙️  Service:          $SERVICE_NAME (systemd)"
+    echo -e "⚙️  Service:          be-client-pro (systemd)"
     echo ""
     echo -e "╔══════════════════════════════════════════════════════════════╗"
     echo -e "║                    USEFUL COMMANDS                           ║"
     echo -e "╚══════════════════════════════════════════════════════════════╝"
-    echo -e "  systemctl status $SERVICE_NAME"
-    echo -e "  systemctl stop $SERVICE_NAME"
-    echo -e "  systemctl restart $SERVICE_NAME"
-    echo -e "  journalctl -u $SERVICE_NAME -f"
+    echo -e "  systemctl status be-client-pro"
+    echo -e "  systemctl stop be-client-pro"
+    echo -e "  systemctl restart be-client-pro"
+    echo -e "  journalctl -u be-client-pro -f"
     echo ""
     echo -e "╔══════════════════════════════════════════════════════════════╗"
     echo -e "║                  BEHIND A NAT OR PROXY?                      ║"
@@ -525,15 +539,18 @@ print_summary() {
     echo -e "  This keeps the capture buffer for real visitors and is correct"
     echo -e "  for almost every server."
     echo ""
-    print_warning "If visitors reach this host through a NAT, load balancer or"
-    echo -e "  reverse proxy that rewrites their source address, every visitor"
-    echo -e "  looks private and nothing will be analysed. In that case edit:"
+    print_info "Plain port forwarding (DNAT) is fine — it rewrites the destination"
+    echo -e "  only, so real visitor IPs stay visible. Nothing to change."
+    echo ""
+    print_warning "Only a reverse proxy (nginx, HAProxy, Cloudflare), a load balancer"
+    echo -e "  in proxy mode, or inbound SNAT rewrites the visitor's SOURCE address."
+    echo -e "  Then every visitor looks private and nothing is analysed. In that case:"
     echo ""
     echo -e "    $install_location/boteraser-pro/be-pro.conf"
     echo -e "    EXCLUDE_LOCAL=\"no\""
-    echo -e "    systemctl restart $SERVICE_NAME"
+    echo -e "    systemctl restart be-client-pro"
     echo ""
-    echo -e "  Check with: journalctl -u $SERVICE_NAME | grep 'TOP 30' -A 5"
+    echo -e "  Check with: journalctl -u be-client-pro | grep 'TOP 30' -A 5"
     echo -e "  Public visitor IPs listed there mean the default is fine."
     echo ""
     print_info "Boteraser PRO is now protecting your server!"
@@ -566,7 +583,7 @@ update_boteraser_pro() {
 
     echo ""
     print_info "Stopping service..."
-    systemctl stop "$SERVICE_NAME"
+    systemctl stop be-client-pro
     print_success "Service stopped"
 
     echo ""
@@ -578,7 +595,7 @@ update_boteraser_pro() {
         print_success "Binary updated successfully"
     else
         print_error "be-client-pro binary not found in downloaded package"
-        systemctl start "$SERVICE_NAME"
+        systemctl start be-client-pro
         exit 1
     fi
 
@@ -587,11 +604,11 @@ update_boteraser_pro() {
 
     echo ""
     print_info "Starting service..."
-    systemctl start "$SERVICE_NAME"
-    if systemctl is-active --quiet "$SERVICE_NAME"; then
+    systemctl start be-client-pro
+    if systemctl is-active --quiet be-client-pro; then
         print_success "Service started successfully"
     else
-        print_warning "Service may not have started. Check: journalctl -u $SERVICE_NAME"
+        print_warning "Service may not have started. Check: journalctl -u be-client-pro"
     fi
 
     echo ""
@@ -602,7 +619,7 @@ update_boteraser_pro() {
     echo -e "📍 Install location: $existing_install/boteraser-pro"
     echo -e "🔑 API Key:          Unchanged"
     echo -e "🌐 Interface:        Unchanged"
-    echo -e "⚙️  Service:          $SERVICE_NAME (systemd)"
+    echo -e "⚙️  Service:          be-client-pro (systemd)"
     echo ""
     print_info "Boteraser PRO is now running the latest version!"
     echo ""
@@ -631,7 +648,7 @@ if [[ -n "$existing_install" ]]; then
     echo -e "[y] Yes - Update binary (be-pro.conf and service will remain unchanged)"
     echo -e "[n] No  - Cancel"
     echo -n -e "👉 Your choice (y/n): "
-    read update_answer
+    read -r -u 3 update_answer
     echo ""
     if [[ "$update_answer" == "y" || "$update_answer" == "Y" ]]; then
         update_boteraser_pro
