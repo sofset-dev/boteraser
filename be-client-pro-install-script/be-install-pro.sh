@@ -515,9 +515,9 @@ EOF
 # STEP 5: SUMMARY
 # =============================================================================
 print_summary() {
-    print_header "INSTALLATION COMPLETED SUCCESSFULLY"
+    print_header "INSTALLATION COMPLETED SUCCESSFULLY!"
     echo ""
-    echo -e "🎉 Boteraser PRO has been installed and started!"
+    echo -e "🎉 Boteraser PRO has been installed successfully!"
     echo ""
     echo -e "📍 Install location: $install_location/boteraser-pro"
     echo -e "🔑 API Key:          Configured"
@@ -533,24 +533,20 @@ print_summary() {
     echo -e "  journalctl -u be-client-pro -f"
     echo ""
     echo -e "╔══════════════════════════════════════════════════════════════╗"
-    echo -e "║                  BEHIND A NAT OR PROXY?                      ║"
+    echo -e "║                    LOCAL TRAFFIC FILTER                      ║"
     echo -e "╚══════════════════════════════════════════════════════════════╝"
-    print_info "Traffic from private addresses is ignored (EXCLUDE_LOCAL=\"yes\")."
-    echo -e "  This keeps the capture buffer for real visitors and is correct"
-    echo -e "  for almost every server."
+    print_info "EXCLUDE_LOCAL=\"yes\" only discards local addresses as noise during"
+    echo -e "  packet capture."
     echo ""
-    print_warning "If visitors reach this host through a NAT, load balancer or"
-    echo -e "  reverse proxy that rewrites their source address, every visitor"
-    echo -e "  looks private and nothing will be analysed. In that case edit:"
-    echo ""
-    echo -e "    $install_location/boteraser-pro/be-pro.conf"
-    echo -e "    EXCLUDE_LOCAL=\"no\""
-    echo -e "    systemctl restart be-client-pro"
-    echo ""
-    echo -e "  Check with: journalctl -u be-client-pro | grep 'TOP 30' -A 5"
-    echo -e "  Public visitor IPs listed there mean the default is fine."
-    echo ""
-    print_info "Boteraser PRO is now protecting your server!"
+    if systemctl is-active --quiet be-client-pro; then
+        print_info "Boteraser PRO is now running."
+    else
+        print_warning "The service is not running. Installation is complete, but"
+        echo -e "  Boteraser PRO is not active yet. Diagnose with:"
+        echo ""
+        echo -e "    systemctl status be-client-pro"
+        echo -e "    journalctl -u be-client-pro -n 50"
+    fi
     echo ""
 }
 
