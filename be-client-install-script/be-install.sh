@@ -124,7 +124,14 @@ check_dependencies() {
     else
         print_success "ipset found"
     fi
-    
+
+    # Check ip6tables (optional)
+    if command -v ip6tables &> /dev/null; then
+        print_success "ip6tables found (IPv6 support enabled)"
+    else
+        print_warning "ip6tables not found (IPv6 support disabled)"
+    fi
+
     # Check awk
     if ! command -v awk &> /dev/null; then
         print_error "awk not found"
